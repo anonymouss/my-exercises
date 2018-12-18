@@ -1,3 +1,5 @@
+#include <cstdlib>
+
 #include "MyLog.h"
 
 #undef LOG_TAG
@@ -6,7 +8,10 @@
 int main() {
     updateLogLevel();
 
-    LOGV("This is verbos log");
+    // wait 1 sec
+    system("sleep 1");
+
+    LOGV("This is verbose log");
     LOGD("This is debug log");
     LOGI("This is info log");
     LOGW("This is warning log");

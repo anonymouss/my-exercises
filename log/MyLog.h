@@ -25,11 +25,14 @@ extern uint32_t gLogLevel;
 #define TRIM_STR(n, str) str[n]
 
 #define TS_PRINTF(fmt, x...) {                                                              \
-    auto tt = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());       \
+    auto tp = std::chrono::system_clock::now();                                             \
+    auto seconds = std::chrono::time_point_cast<std::chrono::seconds>(tp);                  \
+    auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(tp - seconds);\
+    auto tt = std::chrono::system_clock::to_time_t(tp);                                     \
     struct tm *ptm = localtime(&tt);                                                        \
-    fprintf(stdout, "%d-%02d-%02d | %02d:%02d:%02d | " fmt "\n",                            \
+    fprintf(stdout, "%d-%02d-%02d | %02d:%02d:%02d:%03d | " fmt "\n",                       \
         (int)ptm->tm_year + 1900, (int)ptm->tm_mon + 1, (int)ptm->tm_mday,                  \
-        (int)ptm->tm_hour, (int)ptm->tm_min, (int)ptm->tm_sec,                              \
+        (int)ptm->tm_hour, (int)ptm->tm_min, (int)ptm->tm_sec, milliseconds,                \
         ##x);                                                                               \
 }
 
