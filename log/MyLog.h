@@ -4,9 +4,29 @@
 #include <cstdint>
 #include <chrono>
 #include <cstdio>
+#include <thread>
+
+// #define USE_POSIX // don't use posix tid by default, it's too large
+
+#ifdef linux // linux platform
+#include <unistd.h>
+#ifdef USE_POSIX // use posix tid
+#define gettid() std::this_thread::get_id()
+#else // don't use posix tid
+#include <sys/syscall.h>
+#define gettid() syscall(SYS_gettid)
+#endif // end USE_POSIX
+#define TID gettid()
+#define PID getpid()
+#else // non linux platform
+// only support linux
+#define PID = -1
+#define TID = -1
+#endif // end linux
 
 void updateLogLevel();
 int getProperty(const char *key, char *value, const char *defaultValue);
+const char *toStr(const int level);
 
 enum LogLevel : uint32_t {
     LOG_LEVEL_VERBOSE   = 0x0,
@@ -24,16 +44,17 @@ extern uint32_t gLogLevel;
 
 #define TRIM_STR(n, str) str[n]
 
+// XXX: RISK: is fprintf() thread safe ?
 #define TS_PRINTF(fmt, x...) {                                                              \
     auto tp = std::chrono::system_clock::now();                                             \
     auto seconds = std::chrono::time_point_cast<std::chrono::seconds>(tp);                  \
     auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(tp - seconds);\
     auto tt = std::chrono::system_clock::to_time_t(tp);                                     \
     struct tm *ptm = localtime(&tt);                                                        \
-    fprintf(stdout, "%d-%02d-%02d | %02d:%02d:%02d:%03d | " fmt "\n",                       \
+    fprintf(stdout, "%d-%02d-%02d | %02d:%02d:%02d:%03d | %d %ld | " fmt "\n",              \
         (int)ptm->tm_year + 1900, (int)ptm->tm_mon + 1, (int)ptm->tm_mday,                  \
         (int)ptm->tm_hour, (int)ptm->tm_min, (int)ptm->tm_sec, milliseconds,                \
-        ##x);                                                                               \
+        PID, TID, ##x);                                                                     \
 }
 
 #define LOG(level, fmt, x...) {                                                                     \

@@ -7,3 +7,4 @@ set (CMAKE_CXX_STANDARD_REQUIRED ON)
 set (CMAKE_CXX_EXTENSION OFF)
 
 add_executable (mylog main.cpp MyLog.cpp)
+target_link_libraries (mylog pthread)

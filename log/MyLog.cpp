@@ -8,11 +8,22 @@
 uint32_t gLogLevel = LOG_LEVEL_INFO; // default level
 constexpr int PROPERTY_VALUE_MAX = 20;
 
+const char *toStr(const int level) {
+    switch (level) {
+        case LOG_LEVEL_VERBOSE: return "verbose";
+        case LOG_LEVEL_DEBUG:   return "debug";
+        case LOG_LEVEL_INFO:    return "info";
+        case LOG_LEVEL_WARNING: return "warning";
+        case LOG_LEVEL_ERROR:   return "error";
+        default:                return "?";
+    }
+}
+
 void updateLogLevel() {
     char loglevel[PROPERTY_VALUE_MAX] = {0};
     if (getProperty(kLogsLevelProperty, loglevel, "0")) {
         gLogLevel = strtoul(loglevel, nullptr, 16);
-        LOGI("update log level to : %u", gLogLevel);
+        LOGI("update log level to : %s(%u)", toStr(gLogLevel), gLogLevel);
     }
 }
 
