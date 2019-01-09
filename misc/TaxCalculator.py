@@ -12,7 +12,6 @@
 """
 
 
-import os, sys
 from decimal import Decimal
 
 
@@ -40,7 +39,7 @@ def taxCalculate(taxPayable, annual=False):
     elif Decimal(taxPayable) <= Decimal(960000):
         return Decimal(taxPayable) * Decimal(0.35) - Decimal(7160 * base)
     else:
-	    return Decimal(taxPayable) * Decimal(0.45) - Decimal(15160 * base)
+        return Decimal(taxPayable) * Decimal(0.45) - Decimal(15160 * base)
 
 
 if __name__ == '__main__':
@@ -61,7 +60,7 @@ if __name__ == '__main__':
     disease = Decimal(input('大病医疗月扣除（无输入0）：'))
     loan = Decimal(input('房贷专项月扣除（无输入0）：'))
     rent = Decimal(input('房租专项月扣除（无输入0）：'))
-    elder = Decimal(input('赡养老人月扣除（无输入0）'))
+    elder = Decimal(input('赡养老人月扣除（无输入0）:'))
 
     base_deduction = 60000
 
@@ -107,13 +106,13 @@ if __name__ == '__main__':
     print(' - 总税额： %.2f' % totalTax1)
     print(' - 到手： %.2f' % Decimal(total_income - social_deduction - totalTax1))
 
-    print('------------ 方案 2 ：奖金收入单独计算 -----------------------')
+    print('------------ 方案 2 ：奖金收入单独计算 ------------------------')
     salaryTax = taxCalculate(total_salary - total_deduction, True)
     bonusTax = taxCalculate(total_bouns)
     totalTax2 = Decimal(salaryTax + bonusTax)
     print(' - 总税额： %.2f' % totalTax2)
     print(' - 到手： %.2f' % Decimal(total_income - social_deduction - totalTax2))
-    print('-----------------------------------------------------------')
+    print('---------------------------------------------------------------')
     if totalTax1 < totalTax2:
         print('方案 1 靠谱')
     elif totalTax1 > totalTax2:
