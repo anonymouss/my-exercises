@@ -6,4 +6,4 @@ CMakeCache.txt
 Makefile
 
 # bins
-mylog
+*.out
