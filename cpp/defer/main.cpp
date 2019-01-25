@@ -13,7 +13,8 @@ int main() {
     defer( std::cout << "deferred something... 1" << std::endl; );
     defer( std::cout << "deferred something... 2" << std::endl; );
 
-    func();
+    defer( func(); );
 
     std::cout << "bye..." << std::endl;
 }
+
