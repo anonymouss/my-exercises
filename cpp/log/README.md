@@ -1,6 +1,20 @@
 Simple Logger imitates Android ALOG
 
+usage:
+
 just set `log.level` property in file `props`
+
+```cpp
+#include "MyLog.h"
+
+void func() {
+    // use like printf()
+    LOGI("this is an info log");
+    LOGE("this is an error log at line %d", __LINE__);
+}
+```
+
+output:
 
 ```
 2018-12-21 | 18:00:13:792 | 10644 10644 | I: Core : updateLogLevel: 15 | update log level to : info(2)

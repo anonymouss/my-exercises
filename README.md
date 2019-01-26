@@ -1,1 +1,1 @@
-C++ exercises
+my exercises
