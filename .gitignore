@@ -7,3 +7,5 @@ Makefile
 
 # bins
 *.out
+
+cpp/prime_number_test/
