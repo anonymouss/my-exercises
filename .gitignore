@@ -11,3 +11,5 @@ Makefile
 cpp/prime_number_test/
 
 ML2020_homeworks/data/*
+
+*.yuv
