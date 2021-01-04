@@ -9,6 +9,9 @@ Makefile
 *.out
 
 cpp/prime_number_test/
+cpp/QRCode/
+test.txt
+result.txt
 
 ML2020_homeworks/data/*
 
